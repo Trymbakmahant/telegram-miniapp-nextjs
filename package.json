@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
+    "grammy": "^1.30.0",
     "next": "14.2.13",
     "node-telegram-bot-api": "^0.66.0",
     "react": "^18",

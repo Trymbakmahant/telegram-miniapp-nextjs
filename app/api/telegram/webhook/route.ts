@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   console.log("Message received from Telegram:", body);
 
   const chatId = body.message.chat.id;
-  const responseText = `Hello, ${body.message.from.first_name}!`;
+  
   const payload = {
     chat_id: chatId,
     text: 'Click the button below to launch the mini app:',

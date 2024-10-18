@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
                 {
                     text: 'Launch Mini App',
                     web_app : {
-                      url: "https://www.aagam.co/" 
+                      url: "https://en.wikipedia.org/wiki/Happiness" 
                     }
                     // Link to your mini app
                 }

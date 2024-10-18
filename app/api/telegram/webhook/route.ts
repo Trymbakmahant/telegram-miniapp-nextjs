@@ -14,12 +14,16 @@ export async function POST(req: NextRequest) {
             [
                 {
                     text: 'Launch Mini App',
-                    url: "https://www.aagam.co/" // Link to your mini app
+                    web_app : {
+                      url: "https://www.aagam.co/" 
+                    }
+                    // Link to your mini app
                 }
             ]
         ]
     }
 };
+
   // Respond to Telegram
   await fetch(
     `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,

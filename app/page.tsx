@@ -1,95 +1,85 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 
-export default function Home() {
+"use client"
+import { useEffect, useState } from "react";
+
+import jwt from "jsonwebtoken";
+import { initData } from "@telegram-apps/sdk-react";
+const JWT_SECRET = process.env.JWT_SECRET || "your-very-secure-secret";
+
+export default function ProtectedPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+ 
+  useEffect(()=>{
+    console.log(initData)
+  },[initData])
+  useEffect(() => {
+    // Check if the token is already present in localStorage
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        // Verify the token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        setIsAuthenticated(true); // Token is valid
+      } catch (err) {
+        console.error("Invalid token:", err);
+        startTelegramAuth(); // Token invalid, start Telegram authentication
+      }
+    } else {
+      // No token found, initiate the Telegram authentication process
+      startTelegramAuth();
+    }
+
+    setIsLoading(false); // Stop loading spinner
+  }, []);
+
+  // Function to initiate Telegram login/authentication
+  const startTelegramAuth = async () => {
+    try {
+      // Simulate a POST request to your Telegram authentication API
+      const response = await fetch("/api/auth/telegram", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: initData.receiver, // Replace with actual Telegram data
+          username: "exampleUser",
+          hash: "hash", // Replace with actual hash from Telegram login
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Authentication failed.");
+      }
+
+      const data = await response.json();
+      
+      // Save the JWT token to localStorage
+      localStorage.setItem("token", data.token);
+
+      // Set authenticated state to true
+      setIsAuthenticated(true);
+    } catch (err) {
+      console.error("Error during authentication:", err);
+     
+    }
+  };
+
+  if (isLoading) {
+    return <p>Loading...</p>; // Loading spinner while checking authentication
+  }
+
+  if (!isAuthenticated) {
+    return null; // Do not render anything until user is authenticated
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div>
+      <h1>Protected Page</h1>
+      <p>Welcome! You have successfully accessed a protected page.</p>
     </div>
   );
 }

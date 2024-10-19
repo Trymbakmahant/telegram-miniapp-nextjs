@@ -9,14 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@telegram-apps/sdk-react": "^2.0.8",
+    "cookie": "^1.0.1",
     "dotenv": "^16.4.5",
     "grammy": "^1.30.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "14.2.13",
     "node-telegram-bot-api": "^0.66.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/node-telegram-bot-api": "^0.64.7",
     "@types/react": "^18",

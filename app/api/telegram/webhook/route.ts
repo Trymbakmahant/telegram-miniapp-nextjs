@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
                 {
                     text: 'Launch Mini App',
                     web_app : {
-                      url: "https://en.wikipedia.org/wiki/Happiness" 
+                      url: process.env.LAUNCH_APP_URL
                     }
                     // Link to your mini app
                 }
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   // Respond to Telegram
   await fetch(
-    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
     {
       method: "POST",
       headers: {

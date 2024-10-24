@@ -10,7 +10,18 @@ export default function AuthWrapper({
   const { loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Loading...
+      </div>
+    );
   }
 
   return <>{children}</>;

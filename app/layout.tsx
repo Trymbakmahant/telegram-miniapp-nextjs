@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
+import { Root } from "@/components/root/Root";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <Root>
+          <AuthProvider>{children}</AuthProvider>
+        </Root>
       </body>
       <Script src="https://telegram.org/js/telegram-web-app.js" />
     </html>

@@ -13,7 +13,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const hasRun = useRef(false);
-
+  console.log(initData , "initData")
   const authenticate = async () => {
     // if (token || loading) return;
     setLoading(true);

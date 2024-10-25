@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     // Verify Telegram authentication
     const auth = verifyTelegramAuth(data); // Change this to sync since verifyTelegramAuth is not async
-
+    console.log(auth)
     if (!auth) {
       return NextResponse.json(
         { message: "Invalid authentication" },

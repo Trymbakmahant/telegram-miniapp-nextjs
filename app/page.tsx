@@ -1,6 +1,6 @@
 "use client";
 
-// @ts-ignore
+
 import { useInitData } from "@telegram-apps/sdk-react";
 import styles from "./page.module.css";
 import { useAuth, User } from "@/context/AuthContext";
@@ -30,6 +30,10 @@ export default function Home() {
       premium: initData?.user?.isPremium ? initData?.user?.isPremium : false,
       referral: initData?.startParam ? initData?.startParam : "",
     };
+    if(!token){
+      localStorage.setItem("token" , token || "don't exist")
+    }
+
     const tokenData = await login(fetchUserData);
     if (tokenData) {
       setToken(tokenData);

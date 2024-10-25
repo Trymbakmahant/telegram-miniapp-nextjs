@@ -54,7 +54,7 @@ function RootInner({ children }: PropsWithChildren) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useTelegramMock();
   }
-
+ 
   const debug = useLaunchParams().startParam === "debug";
   const manifestUrl = useMemo(() => {
     return new URL("tonconnect-manifest.json", window.location.href).toString();
@@ -62,6 +62,7 @@ function RootInner({ children }: PropsWithChildren) {
 
   // Enable debug mode to see all the methods sent and events received.
   useEffect(() => {
+    console.log(manifestUrl)
     if (debug) {
       import("eruda").then((lib) => lib.default.init());
     }
